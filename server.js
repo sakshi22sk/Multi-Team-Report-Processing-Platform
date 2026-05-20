@@ -194,31 +194,32 @@ app.post('/upload-report', upload.single('file'), async (req, res) => {
 
     const { team_id, uploaded_by } = req.body;
 
-    const file = req.file;
-
     await pool.query(
-      `INSERT INTO reports
+      `INSERT INTO reports 
       (team_id, uploaded_by, file_name, s3_key, status, uploaded_at)
-      VALUES($1,$2,$3,$4,$5,NOW())`,
+      VALUES ($1,$2,$3,$4,$5,NOW())`,
       [
         team_id,
         uploaded_by,
-        file.originalname,
-        file.key,
+        req.file.originalname,
+        req.file.key,
         'pending'
       ]
     );
 
     res.json({
       message: 'File uploaded successfully',
-      file
+      file: req.file
     });
 
-  } catch (error) {
+  } catch (err) {
 
-    console.log(error);
+    console.log(err);
+
     res.status(500).send('Error uploading report');
+
   }
+
 });
 
 app.listen(3000, () => {
