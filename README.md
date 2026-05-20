@@ -192,8 +192,8 @@ POST
 http://localhost:3000/employees
 Body
 {
-  "name":"Sachin",
-  "email":"sachin@gmail.com"
+  "name":"Sakshi",
+  "email":"sakshik170@gmail.com"
 }
 Get Employees
 GET
