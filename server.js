@@ -221,7 +221,25 @@ app.post('/upload-report', upload.single('file'), async (req, res) => {
   }
 
 });
+app.get('/reports', async (req, res) => {
 
+  try {
+
+    const result = await pool.query(
+      'SELECT * FROM reports ORDER BY uploaded_at DESC'
+    );
+
+    res.json(result.rows);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).send('Error fetching reports');
+
+  }
+
+});
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
